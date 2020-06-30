@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://phuong123:phuong123@devconnector-btttr.mongodb.net/devconnector?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://phuong123:phuong123@devconnector-btttr.mongodb.net/devconnector?retryWrites=true&w=majority",
+  "jwtToken": "devconnectorsecret"
 }
