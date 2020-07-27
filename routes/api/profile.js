@@ -7,6 +7,7 @@ const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
+const Post = require('../../models/Post');
 
 // @route   GET api/profile/me
 // @desc    Get current user's profile
@@ -25,8 +26,8 @@ router.get('/me', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
-// @route   POST api/profile/me
-// @desc    Greate or update user profile
+// @route   POST api/profile
+// @desc    Create or update user profile
 // @access  Private
 router.post(
   '/',
@@ -40,7 +41,7 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).json({ errors: errora.array() });
+      res.status(400).json({ errors: errors.array() });
     }
     const {
       company,
@@ -135,6 +136,9 @@ router.get('/user/:user_id', async (req, res) => {
 // @access  private
 router.delete('/', auth, async (req, res) => {
   try {
+    // remove user post
+    await Post.deleteMany({ user: req.user.id });
+    // remove profile
     await Profile.findOneAndRemove({ user: req.user.id });
     await User.findOneAndRemove({ _id: req.user.id });
     res.json({ msg: 'User deleted' });
