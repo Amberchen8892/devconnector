@@ -16,8 +16,6 @@ const Login = ({ login, isAuthenticated }) => {
   // const onChange = (e) =>
   //   setFormData({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = (e) => {
-    console.log('email', email);
-    console.log('password', password);
     e.preventDefault();
     login(email, password);
   };
